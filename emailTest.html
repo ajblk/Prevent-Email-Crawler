@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>email at </title>
+	<meta charset="utf-8">
+	<style> 
+		body {font-size:10px; }
+		li {font-size:3.6em; font-family: "Times New Roman";}
+		li#selemail5 {color:green;  font-weight: bold; font-style:italic;font-size:103%; font-family: "Helvetica";}
+		li#selemail6 {color:#800000;  font-weight: bold; font-style:italic;font-size:143%; font-family: "Helvetica";}
+		li#selemail7 {color:#804D00;  font-weight: bold; font-style:italic;font-size:153%; font-family: "Helvetica";}
+		li#selemail8 {color:#807E00;  font-weight: bold; font-style:italic;font-size:163%; font-family: "Arial";}
+		li#selemail9 {color:#598000;  font-weight: bold; font-style:italic;font-size:173%; font-family: "Arial";}
+		li#selemai20 {color:#008041;  font-weight: bold; font-style:italic;font-size:183%; font-family: "Arial";}
+		li#selemai21 {color:#007780;  font-weight: bold; font-style:italic;font-size:193%; font-family: "Arial";}
+		li#selemai22 {color:#004E80;  font-weight: bold; font-style:italic;font-size:203%; font-family: "Courier";}
+		li#selemai23 {color:#000F80;  font-weight: bold; font-style:italic;font-size:213%; font-family: "Courier";}
+		li#selemai24 {color:#420080;  font-weight: bold; font-style:italic;font-size:233%; font-family: "Courier";}
+		li#selemai25 {color:#780080;  font-weight: bold; font-style:italic;font-size:253%; font-family: "Courier";}
+		li#selemai26 {color:#F00;  font-weight: bold; font-style:italic;font-size:273%; font-family: "Courier New";}
+		li#selemai27 {color:#FFA200;  font-weight: bold; font-style:italic;font-size:213%; font-family: "Courier New";}
+		li#selemai28 {color:#FFFC00;  font-weight: bold; font-style:italic;font-size:233%; font-family: "Courier New";}
+		li#selemai29 {color:#C3FF00;  font-weight: bold; font-style:italic;font-size:253%; font-family: "Courier New";}
+	</style>
+    <script>
+	//common js starts
+	function commonjsAddEvent( obj, type, fn ) {
+		if (obj.addEventListener) {
+			obj.addEventListener( type, fn, false );
+		}
+		else if (obj.attachEvent) {
+			obj["e"+type+fn] = fn;
+			obj[type+fn] = function() 
+			{ 
+				obj["e"+type+fn]( window.event ); 
+			}
+			obj.attachEvent( "on"+type, obj[type+fn] );
+		}
+		else {
+			obj["on"+type] = obj["e"+type+fn];
+		}
+	}
+	function commonjsRemoveEvent( obj, type, fn ){
+		if(obj.removeEventListener){
+			obj.removeEventListener( type, fn, false );
+		}
+		else if(obj.detachEvent){
+			obj.detachEvent("on"+type, obj[type+fn]);
+			obj[type+fn]=null;
+			obj["e"+type+fn]=null;
+		}
+		else
+			obj["on"+type] = null;
+	}	
+	//common js ends
+	
+function nextNode(node) {
+    if (node.hasChildNodes()) {
+        return node.firstChild;
+    } else {
+        while (node && !node.nextSibling) {
+            node = node.parentNode;
+        }
+        if (!node) {
+            return null;
+        }
+        return node.nextSibling;
+    }
+}
+		 
+function getSelectedNodesByClassName(range,className) {
+    var node = range.startContainer;
+    var endNode = range.endContainer;
+	 var rangeNodes = [];
+	 
+	 
+	while(node) 
+	{
+		if((node && node.nodeType && node.nodeType==Node.ELEMENT_NODE && node.className && node.className.toString().indexOf(className)>=0) )	
+		{
+			rangeNodes.push(node);
+			break;
+		}
+			
+		node = node.parentNode;
+	}
+
+	 node = range.startContainer;
+	 
+    // Special case for a range that is contained within a single node
+    if (node == endNode) {
+		return rangeNodes;
+    }
+
+    // Iterate nodes until we hit the end container
+   
+    while (node && node != endNode) {
+	
+		node = nextNode(node);
+	
+		if((node && node.nodeType && node.nodeType==Node.ELEMENT_NODE && node.className && node.className.toString().indexOf(className)>=0) )	
+			rangeNodes.push(node);
+        
+    }
+
+    // Add partially selected nodes at the start of the range
+    node = range.startContainer;
+    while (node && node != range.commonAncestorContainer) {
+	
+		if((node && node.nodeType && node.nodeType==Node.ELEMENT_NODE && node.className && node.className.toString().indexOf(className)>=0) )	
+			 rangeNodes.unshift(node);	
+       
+        node = node.parentNode;
+    }
+
+	//Adding range common Ancestor Container
+	if((node && node.nodeType && node.nodeType==Node.ELEMENT_NODE && node.className && node.className.toString().indexOf(className)>=0) )	
+		 rangeNodes.unshift(node);	
+		 
+	return rangeNodes;
+}	
+
+function insertSpecialCharATTHERATE(event) {
+	
+		var selected,rangeSel,copiedTxt;
+		  if (!document.selection || !document.selection.createRange) {
+			selected = getSelection();
+			rangeSel = selected.rangeCount > 0 && selected.getRangeAt(0);
+			copiedTxt = selected.toString()
+		  } else {
+			selected = document.selection.createRange();
+			rangeSel = selected.duplicate();
+			copiedTxt = selected.text
+		  }	
+			
+	var selNodes = getSelectedNodesByClassName(rangeSel, emailClassName);		
+	var selNodesLength = selNodes.length;
+		
+	for(var k=0;k<selNodesLength;k++)
+	{
+		var selNodeItem = selNodes[k];
+
+		var imgs = selNodeItem.getElementsByTagName("img");
+		var imgslen = imgs.length;
+		for(var j=0;j<imgslen;j++)
+		{
+			var im = imgs[j];				
+			
+			
+			var imgsrc = im.src.toString();
+		
+			var imgSrcStringObj = imgsrc.replace(findImgSrcURIwoQueryString, ''),
+				decodedImgSrcStringObj = decodeURI(imgSrcStringObj),		
+				copiedImgSrcObj = JSON.parse(decodedImgSrcStringObj);
+			
+			// Add '@' to the alt attribute of the <img> so that it can be copied as text
+			if(copiedImgSrcObj['content'].indexOf(emObj.defaultat)>=0)
+			{
+				im.alt="@";
+			}
+			else if(copiedImgSrcObj['content'].indexOf(emObj.defaultdot)>=0)
+			{
+			// Add '.' to the alt attribute of the <img> so that it can be copied as text
+			
+				im.alt=".";			
+			}			
+		}		
+	}				
+}	
+    </script>
+
+  </head>
+  <body>
+	<div id="Contact">
+		<ul>
+			<li>Contact Us</li>
+			<li>simple@email.com</li>	
+			<li id="selemail2" class="crawlEsc" >email1<span><img dataArb="arbitaryCode123XYZ"/></span>specialattribute<img/>com</li>			
+			<li id="selemail3" class="crawlEsc" ><strong>email2<span><img src="images/at608.png"/></span>imagesrc.com</strong></li>
+			<li id="selemail5" class="crawlEsc" >email3<img/>noattributes<img/>com</li>
+			
+			<li id="selemail6" class="crawlEsc">email4<img/>extradot<img/>co<img>uk</li>
+			<li id="selemail7" class="crawlEsc">email5<img/>testing<img/>com</li>
+			<li id="selemail8" class="crawlEsc">email6<img/>testing<img/>com</li>
+			<li id="selemail9" class="crawlEsc">email7<img/>testing<img/>com</li>
+			<li id="selemai20" class="crawlEsc">email8<img/>testing<img/>com</li>
+			<li id="selemai21" class="crawlEsc">email9<img/>testing<img/>com</li>
+			<li id="selemai22" class="crawlEsc">email10<img/>testing<img/>com</li>
+			<li id="selemai23" class="crawlEsc">email11<img/>testing<img/>com</li>
+			<li id="selemai24" class="crawlEsc">email12.noimg<img/>testing<img/>com</li>
+			<li id="selemai25" class="crawlEsc">email13<img/>testing<img/>com</li>
+			<li id="selemai26" class="crawlEsc">email14<img/>testing<img/>com</li>
+			<li id="selemai27" class="crawlEsc">email15<span><img src="images/at608.png"/></span>testing<img/>com</li>	
+			<li id="selemai28" class="crawlEsc">email16<span><img/></span>testing<img/>co<img/>uk</li>					
+		</ul>
+	</div>
+  </body>
+<script>
+var emObj = {};
+emObj.webID='arbitaryCode123XYZ',
+emObj.className = "crawlEsc",
+emObj.img = {},
+emObj.img.attributeName = 'src',
+emObj.img.attributeValue = 'images/at608.png',
+emObj.emText = {},
+emObj.defaultat = 'default01at',
+emObj.defaultdot = 'default02dot';
+
+// Regular Expression  to find  patterns
+var findRGBComponents = /rgb\s*\(\s*(\d{1,3})\s*\,\s*(\d{1,3})\s*\,\s*(\d{1,3})\s*\)/,
+	findFontSize = /^\s*(\d+\.?\d*)(px|pt|em|\%)/ ,
+	findAttributes=/([^\=\,\?\&\s]+)\s*=\s*("[^"]*")/ ,
+	findBoundaryQuotes =/^(["'])+|(["'])+$/g ,
+	findBaseUri = /^(https?:\/\/.*\/)/g ,
+	findImgSrcURIwoQueryString = /^(https?:\/\/.*\/.*\?.*\=)/g;  // find <img> Src Uri without Query string e.g for the below uri
+	// http://example.com/path1/resource.php?variable1=very_imp_Json_string, then the pattern found will be only 
+	// http://example.com/path1/resource.php?variable1=
+		
+var hostURL = window.location.href,
+hostURLBase = hostURL.match(findBaseUri);		
+if(hostURLBase && hostURLBase.length>0)
+	hostURLBase = hostURLBase[0]; // to convert from array to string
+else
+	hostURLBase = "";
+	
+var pathUrl="textImageCreate.php",
+fontUrl=hostURLBase+pathUrl;
+
+
+// To list all emails which has class 'crawlEsc'
+var emails = document.getElementsByClassName(emObj.className),
+	emailslen = emails.length;	
+for( var i=0; i<emailslen;i++)
+{
+	var emItem = emails[i];
+
+	// Retreive the Styles of the Email like Fontsize, Fontcolor, bold or italic or regular, 	
+	var emStyle = window.getComputedStyle(emItem, null);
+	var emStyleFontSize = emStyle.getPropertyValue('font-size') || emStyle.getPropertyValue('fontSize');
+	var emStyleColor = emStyle.getPropertyValue('color');
+	var emStyleFontFamily = emStyle.getPropertyValue('font-family') || emStyle.getPropertyValue('fontFamily') ;
+	var emStyleFontStyle = emStyle.getPropertyValue('font-style') || emStyle.getPropertyValue('fontStyle');
+	var emStyleFontWeight = emStyle.getPropertyValue('font-weight') || emStyle.getPropertyValue('fontWeight');
+
+
+
+	var colorProps = emStyleColor.match(findRGBComponents),
+		fontSizeProps = emStyleFontSize.match(findFontSize),	
+		emStyleFontFamily = emStyleFontFamily.replace(findBoundaryQuotes, '');
+		
+		// Initialize Default values for Email Styles
+		emObj.emText[i] = {},
+		emObj.emText[i].id = emItem.id || i;
+		emObj.emText[i].color = [0,0,0],
+		emObj.emText[i].fontSize = [16,'px'];
+	
+	if(colorProps && colorProps.length>3)
+	{
+		emObj.emText[i].color = [colorProps[1],colorProps[2],colorProps[3]];	// Array color = {255,0,123}, rgb components
+	} 
+	if(fontSizeProps && fontSizeProps.length>2)
+	{
+		emObj.emText[i].fontSize = [fontSizeProps[1],fontSizeProps[2]];  // Array fontsize = {12,"px"}
+	} 	
+	emObj.emText[i].fontFamily = emStyleFontFamily;
+	emObj.emText[i].fontStyle = emStyleFontStyle;
+	emObj.emText[i].fontWeight = emStyleFontWeight;
+		
+	// to list the <img> tags in the email
+	var emImgs = emItem.getElementsByTagName("img"),
+		emImgsLen = emImgs.length,
+		atTheRateNextImgIndex=-1;  // flag used to make sure '@' is used only once.
+	for(var j=0;j<emImgsLen;j++)
+	{
+		var emImgItem = emImgs[j];
+		
+		// to get the attributes in the <img> like src & custom attributes like 'dataarb'
+		var emImgAttributes = emImgItem.attributes,
+			emImgAttributesLen = emImgAttributes.length,
+			dataArb;
+		for(var k=0;k<emImgAttributesLen;k++)
+		{	
+			var	emImgAttributesItem = emImgAttributes[k],
+				emImgAttributesItemName = emImgAttributesItem.nodeName || emImgAttributesItem.name ||  emImgAttributesItem.localName,
+				emImgAttributesItemValue = emImgAttributesItem.value || emImgAttributesItem.nodeValue || emImgAttributesItem.textContent;
+			if(emImgAttributesItemName.toString().toLowerCase().indexOf("dataarb")==0)	
+			{
+				dataArb=emImgAttributesItemValue;
+				break;				
+			}
+		}
+		
+		// ------------------------------------------------------------------------------------------------
+		// -----------				<img> Implementation										-----------
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// 	<img> represents '@' or '.' image by either of the 3 types of attributes
+		//	1. dataArb 	== emObj.webID
+		//	2. src 		== 'images/at608.png'
+		// 	3. without any attributes
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+		// If for <img> src,  no full uri is given, then browsers automatically  takes the baseuri of the page as its full uri, 
+		// i.e if page is 'http://example.com/path1/page?var=some_textvalue, and <img src='images/at608.png' />, 
+		// Then browser automatically appends the <img> uri as 'http://example.com/path1/images/at608.png'
+		// So Inorder to check with our default Image src of '@' Image or '.' Image,
+		// We need to extract the baseuri and append it to the filename of '@' or '.' Image
+		var baseUri = emImgItem.baseURI.match(findBaseUri);		
+		if(baseUri && baseUri.length>0)
+			baseUri = baseUri[0]; // to convert from array to string
+		else
+			baseUri = "";			
+		var ImgSrcUri = baseUri + emObj.img.attributeValue ; //appending baseuri + 'images/at608.png'
+		
+		if(dataArb==emObj.webID || emImgItem[emObj.img.attributeName]==ImgSrcUri ||atTheRateNextImgIndex <= j  )
+		{
+			// This condition is to make sure that '@' is the 1st and only used once
+			if(atTheRateNextImgIndex<0)
+			{
+				emObj.emText[i].content = "default01at";
+				emImgItem.src=fontUrl + "?emailTextObj=" + JSON.stringify(emObj.emText[i]);
+				atTheRateNextImgIndex=j;
+			}
+			else
+			{
+				emObj.emText[i].content = "default02dot";
+				emImgItem.src=fontUrl + "?emailTextObj=" + JSON.stringify(emObj.emText[i]);
+			}			
+		}		
+	}
+}
+	
+ 	var emailClassName="crawlEsc",
+	emails= document.getElementsByClassName(emailClassName);
+	commonjsAddEvent(document.body,'copy',insertSpecialCharATTHERATE) ;  
+  </script>
+</html>
