@@ -19,8 +19,10 @@ But a problem with this approach is that a human user who wants to copy paste th
 
 #How to use 
 
-For email - email5@testing.com,  
-Use html <strong> &lt;li class=&quot;crawlEsc&quot;&gt;email5<span style="color:green">&lt;img/&gt;</span>testing<span style="color:green">&lt;img/&gt;</span>com&lt;/li&gt; </strong>. Replace '@' and '.' with <strong>&lt;img/&gt;</strong> tag and group the email in a custom class name like here "crawlEsc". The code will automatically assign an image of '@' and '.' correctly to the email.
+For email - email5@testing.com,
+<br>Use html <strong> &lt;li class=&quot;crawlEsc&quot;&gt;email5&lt;img/&gt;testing&lt;img/&gt;com&lt;/li&gt; </strong>.
+<br>Replace '@' and '.' with <strong>&lt;img/&gt;</strong> tag and 
+<br>Group the email in a custom class name like here "crawlEsc". The code will automatically assign an image of '@' and '.' correctly to the email.
 
 
 
